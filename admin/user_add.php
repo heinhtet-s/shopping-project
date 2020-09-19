@@ -19,6 +19,12 @@ if($_POST){
    if(empty($_POST['email'])){
      $email_error='email cannot be null';
    }
+   if(empty($_POST['address'])){
+    $add_error='address cannot be null';
+  }
+  if(empty($_POST['phone'])){
+    $phone_error='phone cannot be null';
+  }
    if(empty($_POST['password'])){
      $password_error='Password cannot be null';
    }
@@ -29,9 +35,9 @@ if($_POST){
   else{
     if(empty($_POST['isAdmin'])){
 
-        $row=0;
+        $role=0;
     }else{
-        $row=1;
+        $role=1;
     }
     $email=$_POST['email'];
     
@@ -50,12 +56,16 @@ if($_POST){
         else{
          $password=$_POST['password'];
        $password=password_hash($password,PASSWORD_DEFAULT);
+       $phone=$_POST['phone'];
+       $address=$_POST['address'];
             $pdostatement=$pdo->prepare("INSERT INTO users(name,email,password,role) VALUES(:name,:email,:password,:role)");
     $result=$pdostatement->execute([
         ":name"=>$_POST['name'],
         ":email"=>$_POST['email'],
         ":password"=>$password,
-        ":role"=>$row,
+        ":phone"=>$phone,
+        ":address"=>$address,
+        ":role"=>$role,
     ]);
 if($result){
     echo "<script>alert('Successful Added'); </script>";
@@ -102,6 +112,14 @@ if($result){
       <input type="password" name="password" class="form-control" >
 
          </div>
+         <div class=" form-group">
+                            <p class="text-danger"><?php echo empty($add_error)? '':  $add_error; ?></p>
+								<input type="text" class="form-control" id="name" name="address" >
+                            </div>
+                            <div class="form-group">
+                            <p class="text-danger"><?php echo empty($phone_error)? '':  $phone_error; ?></p>
+								<input type="text" class="form-control" id="name" name="phone" >
+                            </div>
          <div class="form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1" name="isAdmin" value="1">
     <label class="form-check-label" for="exampleCheck1" >is Admin</label>

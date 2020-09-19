@@ -83,7 +83,7 @@ if($_GET['id']){
          </div>
 
          <div class="form-group">
-             <input type="submit" value="Create" class="btn btn-info">
+             <input type="submit" value="Update" class="btn btn-info">
           <a href="category.php" class="btn btn-success">back</a>
          </div>
 </form>

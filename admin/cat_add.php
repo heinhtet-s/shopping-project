@@ -9,8 +9,7 @@ if(empty($_SESSION['user_id'])&& empty($_SESSION['logged_in'])){
   header('Location: login.php');
 }
 if($_POST){
-  $name=$_POST['name'];
-  $description=$_POST['description'];
+  
   if(empty($_POST['name']) || empty($_POST['description'])){
 
 if(empty($_POST['name'])){
@@ -52,7 +51,7 @@ echo "<script>window.location.href = 'category.php'</script>;";
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Create New Blog Post</h3>
+                <h3 class="card-title">Create New Category</h3>
               </div>
             
               <!-- /.card-header -->
