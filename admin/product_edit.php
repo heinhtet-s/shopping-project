@@ -47,19 +47,21 @@ if(empty($_POST['category'])){
 if(empty($_FILES['image']['name'])){
     $image_error='Image cannot be null';
 
-  }
+  }  else{
 
 
-  }elseif(is_numeric($_POST['quantity']) != 1){
+  }  if(is_numeric($_POST['price']) != 1){
    
-    $quantity_error="Quantity should be integer value";
+    $price_error="Price should be integer value";
  
-   }elseif(is_numeric($_POST['quantity']) != 1){
+   } 
+   if(is_numeric($_POST['quantity']) != 1){
    
     $quantity_error="Quantity should be integer value";
  
    }
-  else{
+
+    if(empty($price_error) && empty($quantity_error)){
       $name=$_POST['name'];
       $desc=$_POST['description'];
       $quantity=$_POST['quantity'];
@@ -114,7 +116,7 @@ echo "<script>window.location.href = 'index.php'</script>;";
    }
 } 
   }
-  
+}
 
 
 ?>

@@ -1,3 +1,52 @@
+<?php
+require "config/common.php";
+require "config/config.php";
+session_start();
+if(!empty($_SESSION['cart'])){
+$total=0;
+foreach ($_SESSION['cart'] as $key => $qty) {
+	
+	$id=str_replace('id','',$key);
+	$pdos=$pdo->prepare("SELECT * FROM products WHERE id=:id");
+	$pdos->execute([":id"=>$id]);
+	$result=$pdos->fetch(PDO::FETCH_ASSOC);
+	
+	$total+=$result['price']*$qty; 
+ }
+	$pdos=$pdo->prepare("INSERT INTO sale_orders (user_id,total_price,order_date) VALUES(:id,:tprice,:odate)");
+	$result=$pdos->execute([':id'=>$_SESSION['user_id'],
+					":tprice"=>$total,
+					":odate"=>date('Y-m-d H:m:s'),
+						]);
+if(!empty($result)){
+$sid=$pdo->lastInsertId();
+foreach ($_SESSION['cart'] as $key => $qty) {
+	$id=str_replace('id','',$key);
+	
+
+	$pdos=$pdo->prepare("INSERT INTO sale_order_detail (sale_orders_id,product_id,quantity,order_date) VALUES(:sid,:pid,:qty,:odate)");
+	
+	$pdos->execute([":sid"=>$sid,
+					":pid"=>$id,
+					":qty"=>$qty,
+					":odate"=>date('Y-m-d H:m:s'),
+						]);
+						$pdos=$pdo->prepare("SELECT quantity FROM products WHERE id=:id");
+						$pdos->execute([":id"=>$id]);
+						$result=$pdos->fetch(PDO::FETCH_ASSOC);
+						$quantity=$result['quantity']-$qty;
+						$pdos=$pdo->prepare("UPDATE  products SET quantity=:qty WHERE id=:id");
+						$pdos->execute([":qty"=>$quantity,
+										 ":id"=>$id]);
+
+}
+
+}
+unset($_SESSION['cart']);
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -38,7 +87,7 @@
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="index.html">Orchid Shopping</a>
+					<a class="navbar-brand logo_h" href="index.php">Orchid Shopping</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
@@ -90,31 +139,7 @@
 	<section class="order_details section_gap">
 		<div class="container">
 			<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
-			<div class="row order_d_inner">
-				<div class="col-lg-6">
-					<div class="details_item">
-						<h4>Order Info</h4>
-						<ul class="list">
-							<li><a href="#"><span>Order number</span> : 60235</a></li>
-							<li><a href="#"><span>Date</span> : Los Angeles</a></li>
-							<li><a href="#"><span>Total</span> : USD 2210</a></li>
-							<li><a href="#"><span>Payment method</span> : Check payments</a></li>
-						</ul>
-					</div>
-				</div>
-				
-				<div class="col-lg-6">
-					<div class="details_item">
-						<h4>Shipping Address</h4>
-						<ul class="list">
-							<li><a href="#"><span>Street</span> : 56/8</a></li>
-							<li><a href="#"><span>City</span> : Los Angeles</a></li>
-							<li><a href="#"><span>Country</span> : United States</a></li>
-							<li><a href="#"><span>Postcode </span> : 36952</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
+			
 		
 		</div>
 	</section>

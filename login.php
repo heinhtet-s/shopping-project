@@ -27,10 +27,12 @@ $email_error="Email cannot be null";
 
    if($user){
     if(password_verify($password,$user['password'])){
+		
         $_SESSION['user_id']=$user['id'];
         $_SESSION['logged_in']=time();
         $_SESSION['username']=$user['name'];
-        $_SESSION['role']=$user['role'];
+		$_SESSION['role']=$user['role'];
+		
         header('Location: index.php');
     }
 

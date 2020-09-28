@@ -1,7 +1,7 @@
 
 
 <?php
-include('header.php');
+include 'header.php' ;
 if(session_status()== PHP_SESSION_NONE){
 	session_start();
 }
@@ -20,11 +20,11 @@ if(!empty($_GET['pageno'])){
   if(empty($_GET['search'] )){
 	if(!empty($_GET['c_id'])){
 		$c_id=$_GET['c_id'];
-		$stmt=$pdo->prepare("SELECT * FROM products WHERE category_id=:id");
+		$stmt=$pdo->prepare("SELECT * FROM products WHERE category_id=:id AND  quantity>0 ");
 		$stmt->execute([':id'=>$c_id]);
 		$rawuser=$stmt->fetchAll();
 		$total_pages=ceil(count($rawuser)/$numOfrecs);
-		$stmt=$pdo->prepare("SELECT * FROM products WHERE category_id=:id  LIMIT $offset,$numOfrecs");
+		$stmt=$pdo->prepare("SELECT * FROM products WHERE category_id=:id AND quantity>0 LIMIT $offset,$numOfrecs");
 		$stmt->execute([':id'=>$c_id]);
 		$user=$stmt->fetchAll();
 		
@@ -32,25 +32,25 @@ if(!empty($_GET['pageno'])){
 	 
 	   
 
-   $stmt=$pdo->prepare("SELECT * FROM products ORDER BY id DESC");
+   $stmt=$pdo->prepare("SELECT * FROM products WHERE quantity>0 ORDER BY id DESC");
    $stmt->execute();
    $rawuser=$stmt->fetchAll();
   $total_pages=ceil(count($rawuser)/$numOfrecs);
 
-  $stmt= $pdo->prepare("SELECT * FROM  products ORDER BY id DESC LIMIT $offset,$numOfrecs ");
+  $stmt= $pdo->prepare("SELECT * FROM  products WHERE quantity>0 ORDER BY id DESC LIMIT $offset,$numOfrecs ");
   $stmt->execute();
   $user=$stmt->fetchAll();
 		}
 }
   else{
  $searchkey=$_GET['search'];
- $stmt=$pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchkey%' ");
+ $stmt=$pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchkey%' AND  quantity>0 ");
    $stmt->execute();
    $rawuser=$stmt->fetchAll();
 
    
    $total_pages=ceil(count($rawuser)/$numOfrecs);
-   $stmt= $pdo->prepare("SELECT * FROM  products WHERE name LIKE '%$searchkey%' ORDER BY id DESC LIMIT $offset,$numOfrecs ");
+   $stmt= $pdo->prepare("SELECT * FROM  products WHERE name LIKE '%$searchkey%' AND quantity>0 ORDER BY id DESC LIMIT $offset,$numOfrecs ");
    $stmt->execute();
    $user=$stmt->fetchAll();
    
@@ -58,6 +58,11 @@ if(!empty($_GET['pageno'])){
 
   }
 ?> 
+
+
+    <!-- End Banner
+
+
                   <!-- Start Filter Bar -->
 				  <div class="container">
 		<div class="row">
@@ -128,7 +133,7 @@ if(!empty($_GET['pageno'])){
 						<!-- single product -->
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
-								<img class="img-fluid" style="width:auto; height:200px;" src="image/<?php echo escape($r['image']); ?>" alt="">
+								<a href="product_detail.php?id=<?php echo $r['id']?>"><img class="img-fluid" style="width:auto; height:200px;" src="image/<?php echo escape($r['image']); ?>" alt=""></a>
 								<div class="product-details">
 									<h6><?php echo escape($r['name']); ?></h6>
 									<div class="price">
@@ -136,13 +141,22 @@ if(!empty($_GET['pageno'])){
 										<h6 class="l-through"><?php echo escape($r['price']);  ?></h6>
 									</div>
 									<div class="prd-bottom">
-
-										<a href="" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
-										
-										<a href="" class="social-info">
+									
+                                        <form action="Addtocart.php" method="post" style="display: inline-block;" >
+										<input type="hidden" name="id" value="<?php echo $r['id']?>">
+										<input type="hidden" name="_token" value="<?php echo $_SESSION['_token'] ?>">
+										<input type="hidden" name="qty" value="1">
+										<div class="social-info" >
+											
+								                <button type="submit"  class="social-info" style="display: contents;" >
+												<span class="ti-bag"></span>
+												<p class="hover-text" style="width: 78px;">add to bag</p>
+												</button>
+											
+											
+										</div>
+										</form>
+										<a href="product_detail.php?id=<?php echo $r['id']?>" class="social-info">
 											<span class="lnr lnr-move"></span>
 											<p class="hover-text">view more</p>
 										</a>

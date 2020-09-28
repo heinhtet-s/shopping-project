@@ -1,43 +1,52 @@
+
+<?php
+session_start();
+if(empty( $_SESSION['user_id'])&& empty($_SESSION['logged_in'])){
+
+  }
+?>
 	
-<!DOCTYPE html>
+	<!-- End Banner Area -->
+
+	<!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
 <head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Karma Shop</title>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
 
-	<!--
+    <!--
             CSS
             ============================================= -->
-	<link rel="stylesheet" href="css/linearicons.css">
-	<link rel="stylesheet" href="css/owl.carousel.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/themify-icons.css">
-	<link rel="stylesheet" href="css/nice-select.css">
-	<link rel="stylesheet" href="css/nouislider.min.css">
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/nouislider.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body id="category">
+<body>
 
-	<!-- Start Header Area -->
+    <!-- Start Header Area -->
 	<header class="header_area sticky-header">
 		<div class="main_menu">
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
-				<div class="container">
+                <div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<a class="navbar-brand logo_h" href="index.php">Orchid Shopping</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -46,21 +55,34 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
+					<?php
+					
+						  $cart=0;
+						 
+						  if(!empty($_SESSION["cart"])){
+							
+							
+						  foreach($_SESSION["cart"] as $key => $qty){
+							 $cart+=$qty;
+						  }
+						
+						}
+
+                        ?>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						
+						<div class="float-right">
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag"><?php echo $cart; ?></span></a></li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>
 						</ul>
+						</div>
 					</div>
 				</div>
 			</nav>
 		</div>
-		
-		
 		<div class="search_input" id="search_input_box">
 			<div class="container">
 				<form class="d-flex justify-content-between" method="get" action="index.php">
@@ -73,16 +95,16 @@
 	</header>
 	<!-- End Header Area -->
 
-	<!-- Start Banner Area -->
-	<section class="banner-area organic-breadcrumb">
+    <!-- Start Banner Area -->
+   <!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb" style="margin-bottom: 0 !important;">
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1 class="pl-5">Welcome to orchid shopping</h1>
+					<h1 class="pl-5">Welcome <?php echo $_SESSION['username']?> </h1>
+					<a href="logout.php" class=" btn btn-danger" style="color: black; border-radius: 20px; margin-left: 170px;">Logout</a>
 					
 				</div>
 			</div>
 		</div>
 	</section>
-	
-	<!-- End Banner Area -->

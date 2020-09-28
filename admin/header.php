@@ -19,6 +19,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -120,6 +122,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+        </ul>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview menu">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Starter Pages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="weekly_report.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Weekly report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="monthly_report.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Monthly report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="best_seller.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Best Seller Item</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="royal_m.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Royal Member</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

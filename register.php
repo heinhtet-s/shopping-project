@@ -61,7 +61,7 @@ if(empty($_POST['username'])){
         ":password"=>$password,
         ":address"=>$add,
         ":phone"=>$phone,
-        ":role"=>1,
+        ":role"=>0,
 
     ]);
     if($result){
