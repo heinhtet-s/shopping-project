@@ -23,6 +23,7 @@ if(!empty($_GET['pageno'])){
 		$stmt=$pdo->prepare("SELECT * FROM products WHERE category_id=:id AND  quantity>0 ");
 		$stmt->execute([':id'=>$c_id]);
 		$rawuser=$stmt->fetchAll();
+		
 		$total_pages=ceil(count($rawuser)/$numOfrecs);
 		$stmt=$pdo->prepare("SELECT * FROM products WHERE category_id=:id AND quantity>0 LIMIT $offset,$numOfrecs");
 		$stmt->execute([':id'=>$c_id]);

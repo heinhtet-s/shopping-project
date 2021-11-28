@@ -26,7 +26,7 @@ if ($_POST) {
   
    
     
-    # code...
+   
 }
 echo "<script>alert('incorrect email or password'); </script>";
 }

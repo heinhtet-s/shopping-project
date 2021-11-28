@@ -97,13 +97,18 @@ if(empty( $_SESSION['user_id'])&& empty($_SESSION['logged_in'])){
 
     <!-- Start Banner Area -->
    <!-- Start Banner Area -->
+ 
 	<section class="banner-area organic-breadcrumb" style="margin-bottom: 0 !important;">
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
+				<?php if(!empty($_SESSION['username'])){ ?>
 					<h1 class="pl-5">Welcome <?php echo $_SESSION['username']?> </h1>
 					<a href="logout.php" class=" btn btn-danger" style="color: black; border-radius: 20px; margin-left: 170px;">Logout</a>
-					
+					<?php }else{ ?>
+						<h1 class="pl-5">Welcome To Our Orchid Shopping </h1>
+						<a href="login.php" class=" btn btn-danger" style="color: black; border-radius: 20px; margin-left: 170px;">Login</a>
+                          <?php } ?>
 				</div>
 			</div>
 		</div>
